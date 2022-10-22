@@ -1,16 +1,18 @@
 import socket
 
-from time import sleep
 import threading
 
 from matplotlib import pyplot as plt
 import numpy as np
 
-host = "127.0.0.1"
+host = "26.105.253.103"
 # do not take any reserved or well known ports
 port = 6969
 
+# server = socket.gethostbyname(socket.gethostname())
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# socket.AF_INET = this tells us what type of socket or address we are looking for the specific connection
+#  socket.SOCK_STREAM = this means we are streaming data to the socket
 server.bind((host, port))
 server.listen()
 
@@ -21,8 +23,6 @@ nicknames2 = []
 
 # broadcasting messages from the server to all the clients
 def broadcast(message):
-    # implement the filtering of the messages here
-    # implement the brand analytics and tracking here
 
     for client in clients:
         client.send(message)
@@ -67,9 +67,14 @@ def handle(client):
                         brandName[brand] += 1
                         x.append(brandName[brand])
                         y.append(brand)
+                # call of the brand
+                if i == "/sd":
+                    brandNamesDataDisplay()
             message = " ".join(message1)
+
             # data needs to be in bytes
             message = message.encode("ascii")
+
             broadcast(message)  # broadcast takes bytes to broadcast
 
         except:
@@ -84,9 +89,8 @@ def handle(client):
             break
 
 
-# data graph show of brand names
+# data graph show of brand names  (currently off)
 def brandNamesDataDisplay():
-    sleep(20)
     x = np.array(xLevel)
     y = np.array(yLevel)
     plt.bar(x, y)
@@ -115,7 +119,7 @@ def receive():
 
         print(f"Nickname of the client is {nickname}")
 
-        broadcast(f"{nickname} joined the chat".encode('ascii'))
+        broadcast(f"[NEW CONNECTION] {nickname} connected".encode('ascii'))
         # letting know the specific client that it has connected to the server
         client.send("Connected to the server".encode('ascii'))
 
@@ -124,12 +128,17 @@ def receive():
 
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
-
+        # this shows hom many threads are active , each thread represent each client
+        # 2 thread are constantly running so, I have to subtract 2 thread
+        threadCount = threading.active_count()
+        print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 2}")
+        if threadCount == 0:
+            print("there is no-one in the server")
 
 # main method
-print("Server is listening..........")
+print("[STARTING]  is listening..........")
 # receiving on another thread because matplotlib need to run on main thread or it crashes
 t = threading.Thread(target=receive)
 t.start()
 
-brandNamesDataDisplay()
+# brandNamesDataDisplay()
