@@ -5,7 +5,7 @@ import threading
 from matplotlib import pyplot as plt
 import numpy as np
 
-host = "26.105.253.103"
+host = "127.0.0.1"
 # do not take any reserved or well known ports
 port = 6969
 
@@ -32,7 +32,7 @@ def broadcast(message):
 def clientCount(n):
     if len(nicknames) == 0:
         # print(nicknames2)
-        with open('userList.txt', 'w') as filehandle:
+        with open('../userList.txt', 'w') as filehandle:
             for f in nicknames2:
                 filehandle.write(f'{f}\n')
     else:

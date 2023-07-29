@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # serverIp = str(input("Enter the server IP: "))
-serverIp = "26.105.253.103"
+serverIp = "127.0.0.1"
 print(serverIp)
 # serverPort = int(input("Enter the server port: "))
 serverPort = 6969
