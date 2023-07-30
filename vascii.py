@@ -15,7 +15,7 @@ cols = os.get_terminal_size().columns
 rows = os.get_terminal_size().lines
 paddingSize = 10
 remoteCols = 100
-remoteRows = 70
+remoteRows = 100
 bufferSize = 102400
 send_sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
 recv_sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
@@ -109,6 +109,7 @@ def img2ascii(pixels, width):
     global invert, contrast, scale, cols, mode, rows, remoteCols, remoteRows, paddingSize
     # ASCII art charset
     chars = ["@", "%", "&", "$", "#", "+", "=", "-", ":", ".", " "]
+    # chars = ["@", "%", "&", "$", "#", "+", "=", "-", ":", ".", " "]
     if invert == 1:
         chars.reverse()
     # Assigning a char to each pixel
