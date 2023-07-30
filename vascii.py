@@ -109,7 +109,6 @@ def img2ascii(pixels, width):
     global invert, contrast, scale, cols, mode, rows, remoteCols, remoteRows, paddingSize
     # ASCII art charset
     chars = ["@", "%", "&", "$", "#", "+", "=", "-", ":", ".", " "]
-    # chars = ["@", "%", "&", "$", "#", "+", "=", "-", ":", ".", " "]
     if invert == 1:
         chars.reverse()
     # Assigning a char to each pixel
